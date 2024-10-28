@@ -1,0 +1,15 @@
+/* sharingDemo.css */
+.slds-scrollable_y {
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+.slds-box {
+    height: 100%;
+    background: white;
+}
+
+.slds-box:hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
