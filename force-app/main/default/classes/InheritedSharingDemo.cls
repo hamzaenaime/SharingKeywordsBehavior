@@ -4,6 +4,48 @@ public inherited sharing class InheritedSharingDemo {
     public static List<Opportunity> getRecords() {
         return [SELECT Id, Name, StageName FROM Opportunity LIMIT 5];
     }
+
+    // Static methods to instantiate and call inner classes
+    @AuraEnabled
+    public static List<Opportunity> getDefaultNestedRecords() {
+        return new DefaultNested().getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getWithSharingNestedRecords() {
+        return new WithSharingNested().getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getWithoutSharingNestedRecords() {
+        return new WithoutSharingNested().getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getInheritedSharingNestedRecords() {
+        return new InheritedSharingNested().getRecords();
+    }
+
+    // Static methods to instantiate and call other classes
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentInheritedChildDefault() {
+        return DefaultAccessFlowDemo.getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentInheritedChildWithSharing() {
+        return WithSharingAccessFlowDemo.getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentInheritedChildWithoutSharing() {
+        return WithoutSharingAccessFlowDemo.getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentInheritedChildInherited() {
+        return InheritedAccessFlowDemo.getRecords();
+    }
     
     public class DefaultNested {
         @AuraEnabled
@@ -31,25 +73,5 @@ public inherited sharing class InheritedSharingDemo {
         public List<Opportunity> getRecords() {
             return [SELECT Id, Name, StageName FROM Opportunity LIMIT 5];
         }
-    }
-    
-    @AuraEnabled
-    public static List<Opportunity> getDefaultNestedRecords() {
-        return new DefaultNested().getRecords();
-    }
-    
-    @AuraEnabled
-    public static List<Opportunity> getWithSharingNestedRecords() {
-        return new WithSharingNested().getRecords();
-    }
-    
-    @AuraEnabled
-    public static List<Opportunity> getWithoutSharingNestedRecords() {
-        return new WithoutSharingNested().getRecords();
-    }
-    
-    @AuraEnabled
-    public static List<Opportunity> getInheritedSharingNestedRecords() {
-        return new InheritedSharingNested().getRecords();
     }
 }

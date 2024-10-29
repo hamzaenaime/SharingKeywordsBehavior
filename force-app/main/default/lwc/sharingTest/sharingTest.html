@@ -19,6 +19,21 @@
                 </div>
             </div>
         </div>
+
+        <div class="slds-form-element slds-p-top_medium">
+            <label class="slds-form-element__label">Child Class</label>
+            <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <select class="slds-select" onchange={handleChildClassChange}>
+                        <option value="">Select Child Class</option>
+                        <option value="DefaultChild">Default Child</option>
+                        <option value="WithSharingChild">With Sharing Child</option>
+                        <option value="WithoutSharingChild">Without Sharing Child</option>
+                        <option value="InheritedSharingChild">Inherited Sharing Child</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         
         <div class="slds-form-element slds-p-top_medium">
             <label class="slds-form-element__label">Nested Class</label>

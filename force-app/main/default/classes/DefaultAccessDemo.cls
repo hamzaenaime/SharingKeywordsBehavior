@@ -25,6 +25,27 @@ public class DefaultAccessDemo {
     public static List<Opportunity> getInheritedSharingNestedRecords() {
         return new InheritedSharingNested().getRecords();
     }
+
+    // Static methods to instantiate and call other classes
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentDefaultChildDefault() {
+        return DefaultAccessFlowDemo.getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentDefaultChildWithSharing() {
+        return WithSharingAccessFlowDemo.getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentDefaultChildWithoutSharing() {
+        return WithoutSharingAccessFlowDemo.getRecords();
+    }
+    
+    @AuraEnabled
+    public static List<Opportunity> getRecordsParentDefaultChildInherited() {
+        return InheritedAccessFlowDemo.getRecords();
+    }
     
     // Nested class with default sharing
     public class DefaultNested {
