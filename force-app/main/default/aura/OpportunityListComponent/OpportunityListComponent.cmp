@@ -1,0 +1,15 @@
+<aura:component controller="DefaultAccessDemo" implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="opportunities" type="List" />
+    <aura:attribute name="columns" type="List" />
+
+    <lightning:card title="Opportunity List" iconName="standard:opportunity">
+        <lightning:datatable 
+            data="{!v.opportunities}"
+            columns="{!v.columns}"
+            keyField="Id"
+            hideCheckboxColumn="true"
+        />
+    </lightning:card>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

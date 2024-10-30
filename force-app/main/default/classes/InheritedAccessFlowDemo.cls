@@ -10,6 +10,6 @@ public inherited sharing class InheritedAccessFlowDemo {
     }
 
     public static List<Opportunity> getRecords() {
-        return [SELECT Id, Name, StageName FROM Opportunity LIMIT 5];
+        return [SELECT Id, Name, StageName, Type FROM Opportunity LIMIT 5];
     }
 }

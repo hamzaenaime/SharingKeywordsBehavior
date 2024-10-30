@@ -50,13 +50,24 @@ export default class SharingTest extends LightningElement {
     @track selectedNestedClass = '';
     @track selectedChildClass = '';
     @track results = [];
+    @track testresults = [];
     @track error = '';
     @track isLoading = false;
 
     columns = [
         { label: 'Id', fieldName: 'Id', type: 'text' },
         { label: 'Name', fieldName: 'Name', type: 'text' },
-        { label: 'Stage', fieldName: 'StageName', type: 'text' }
+        { label: 'Stage', fieldName: 'StageName', type: 'text' },
+        { label: 'Type', fieldName: 'Type', type: 'text' }
+    ];
+
+    resultsColumns = [
+        // { label: 'Id', fieldName: 'id', type: 'text' },
+        { label: 'Base Class', fieldName: 'baseClass', type: 'text' },
+        { label: 'Child Class', fieldName: 'childClass', type: 'text' },
+        { label: 'Nested Class', fieldName: 'nestedClass', type: 'text' },
+        { label: 'Records', fieldName: 'records', type: 'text' },
+        { label: 'Access Type Value', fieldName: 'type', type: 'text' }
     ];
 
     get isButtonDisabled() {
@@ -91,7 +102,6 @@ export default class SharingTest extends LightningElement {
         try {
             let records;
             const methodKey = `${this.selectedBaseClass}_${this.selectedChildClass || this.selectedNestedClass || ''}`;
-            console.log('## methodKey', methodKey);
             switch(methodKey) {
                 // Default Access Demo combinations
                 case 'Default_':
@@ -119,7 +129,7 @@ export default class SharingTest extends LightningElement {
                     records = await getRecordsParentDefaultChildWithoutSharing();
                     break;
                 case 'Default_InheritedSharingChild':
-                    records = await getRecordsParentDefaultChildInherited;
+                    records = await getRecordsParentDefaultChildInherited();
                     break;
 
                 // With Sharing Demo combinations
@@ -211,11 +221,35 @@ export default class SharingTest extends LightningElement {
             }
             
             this.results = records;
-            console.log('## records', records);
+            this.handleResults();
         } catch (error) {
             this.error = '## ' + error.body?.message || '## An error occurred while testing sharing behavior.';
         } finally {
             this.isLoading = false;
+        }
+    }
+
+    handleResults() {
+        try { 
+            const existingCombination = this.testresults.find(
+                (result) =>
+                    result.id === `${this.selectedBaseClass}_${this.selectedChildClass}_${this.selectedNestedClass}`
+            );
+            if (!existingCombination) {
+                const records = this.results.length === 5 ? 'all' : 'shared records';
+                const type = this.results.some(record => record.Type) ? 'Yes' : 'No';
+                this.testresults.push({
+                    id: `${this.selectedBaseClass}_${this.selectedChildClass}_${this.selectedNestedClass}`,
+                    baseClass: this.selectedBaseClass,
+                    childClass: this.selectedChildClass,
+                    nestedClass: this.selectedNestedClass,
+                    records,
+                    type
+                });
+            }
+            this.testresults = [...this.testresults];
+        } catch (error) {
+            console.log('## error: ', error.message);
         }
     }
 }
