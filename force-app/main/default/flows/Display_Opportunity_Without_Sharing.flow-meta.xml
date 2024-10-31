@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Default_Access_Demo</name>
-        <label>Default Access Demo</label>
-        <locationX>578</locationX>
-        <locationY>458</locationY>
-        <actionName>DefaultAccessFlowDemo</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>display_an_opportunity</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>faultmessage</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <nameSegment>DefaultAccessFlowDemo</nameSegment>
-        <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
-    <actionCalls>
         <name>Inherited_Sharing_Access_Demo</name>
         <label>Inherited Sharing Access Demo</label>
         <locationX>1106</locationX>
@@ -38,6 +17,27 @@
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <nameSegment>InheritedAccessFlowDemo</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Omitted_Access_Demo</name>
+        <label>Omitted Access Demo</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <actionName>OmittedAccessFlowDemo</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>display_an_opportunity</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>faultmessage</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>OmittedAccessFlowDemo</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
@@ -102,14 +102,6 @@
         </connector>
     </assignments>
     <choices>
-        <name>Default</name>
-        <choiceText>Default</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Default</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>Get_Records_Element</name>
         <choiceText>Get Records Element</choiceText>
         <dataType>String</dataType>
@@ -123,6 +115,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Inherited </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Omitted</name>
+        <choiceText>Omitted</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Omitted</stringValue>
         </value>
     </choices>
     <choices>
@@ -146,7 +146,7 @@
         <label>Component</label>
         <locationX>1370</locationX>
         <locationY>350</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Omitted Outcome</defaultConnectorLabel>
         <rules>
             <name>GetElement</name>
             <conditionLogic>and</conditionLogic>
@@ -169,13 +169,13 @@
                 <leftValueReference>ComponentChoice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Default</elementReference>
+                    <elementReference>Omitted</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Default_Access_Demo</targetReference>
+                <targetReference>Omitted_Access_Demo</targetReference>
             </connector>
-            <label>Default</label>
+            <label>Omitted</label>
         </rules>
         <rules>
             <name>Inheritted_sharing</name>
@@ -225,7 +225,7 @@
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Display Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Display Opportunities -&gt; User Or System Context - Depends on How Flow is Launched</label>
+    <label>Display Opportunities -&gt; System Context - Without Sharing</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -264,7 +264,7 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>display_an_opportunity</name>
         <label>display an opportunity</label>
@@ -281,7 +281,7 @@
             <choiceReferences>With_Sharing</choiceReferences>
             <choiceReferences>Without_Sharing</choiceReferences>
             <choiceReferences>Inherited</choiceReferences>
-            <choiceReferences>Default</choiceReferences>
+            <choiceReferences>Omitted</choiceReferences>
             <choiceReferences>Get_Records_Element</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
@@ -297,13 +297,13 @@
             <fieldType>Repeater</fieldType>
             <fields>
                 <name>opportunity</name>
-                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].StageName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Type: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Omitted_Access_Demo[$EachItem].Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Omitted_Access_Demo[$EachItem].StageName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Type: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Omitted_Access_Demo[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
                 <fieldType>DisplayText</fieldType>
             </fields>
             <inputParameters>
                 <name>collection</name>
                 <value>
-                    <elementReference>Default_Access_Demo</elementReference>
+                    <elementReference>Omitted_Access_Demo</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -325,7 +325,7 @@
                     <leftValueReference>ComponentChoice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <elementReference>Default</elementReference>
+                        <elementReference>Omitted</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>

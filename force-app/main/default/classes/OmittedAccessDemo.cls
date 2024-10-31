@@ -1,5 +1,5 @@
-// Base class with default sharing behavior
-public class DefaultAccessDemo {
+// Base class with Omitted sharing behavior
+public class OmittedAccessDemo {
     @AuraEnabled
     public static List<Opportunity> getRecords() {
         return [SELECT Id, Name, StageName, Type FROM Opportunity LIMIT 5];
@@ -7,8 +7,8 @@ public class DefaultAccessDemo {
 
     // Static methods to instantiate and call inner classes
     @AuraEnabled
-    public static List<Opportunity> getDefaultNestedRecords() {
-        return new DefaultNested().getRecords();
+    public static List<Opportunity> getOmittedNestedRecords() {
+        return new OmittedNested().getRecords();
     }
     
     @AuraEnabled
@@ -28,27 +28,27 @@ public class DefaultAccessDemo {
 
     // Static methods to instantiate and call other classes
     @AuraEnabled
-    public static List<Opportunity> getRecordsParentDefaultChildDefault() {
-        return DefaultAccessFlowDemo.getRecords();
+    public static List<Opportunity> getRecordsParentOmittedChildOmitted() {
+        return OmittedAccessFlowDemo.getRecords();
     }
     
     @AuraEnabled
-    public static List<Opportunity> getRecordsParentDefaultChildWithSharing() {
+    public static List<Opportunity> getRecordsParentOmittedChildWithSharing() {
         return WithSharingAccessFlowDemo.getRecords();
     }
     
     @AuraEnabled
-    public static List<Opportunity> getRecordsParentDefaultChildWithoutSharing() {
+    public static List<Opportunity> getRecordsParentOmittedChildWithoutSharing() {
         return WithoutSharingAccessFlowDemo.getRecords();
     }
     
     @AuraEnabled
-    public static List<Opportunity> getRecordsParentDefaultChildInherited() {
+    public static List<Opportunity> getRecordsParentOmittedChildInherited() {
         return InheritedAccessFlowDemo.getRecords();
     }
     
-    // Nested class with default sharing
-    public class DefaultNested {
+    // Nested class with Omitted sharing
+    public class OmittedNested {
         @AuraEnabled
         public List<Opportunity> getRecords() {
             return [SELECT Id, Name, StageName, Type FROM Opportunity LIMIT 5];

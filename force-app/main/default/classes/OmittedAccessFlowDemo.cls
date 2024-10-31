@@ -1,6 +1,6 @@
-public class DefaultAccessFlowDemo {
-    @InvocableMethod(label='Default Access Demo' 
-                     description='Demonstrates default sharing behavior' 
+public class OmittedAccessFlowDemo {
+    @InvocableMethod(label='Omitted Access Demo' 
+                     description='Demonstrates Omitted sharing behavior' 
                      category='Sharing Demos')
     public static List<List<Opportunity>> execute() {
         List<List<Opportunity>> results = new List<List<Opportunity>>();

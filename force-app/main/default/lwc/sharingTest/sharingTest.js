@@ -1,45 +1,45 @@
 // sharingTest.js
 import { LightningElement, track } from 'lwc';
-// Default Access Demo methods
-import getRecordsDefault from '@salesforce/apex/DefaultAccessDemo.getRecords';
-import getRecordsDefaultNested from '@salesforce/apex/DefaultAccessDemo.getDefaultNestedRecords';
-import getRecordsDefaultWithSharing from '@salesforce/apex/DefaultAccessDemo.getWithSharingNestedRecords';
-import getRecordsDefaultWithoutSharing from '@salesforce/apex/DefaultAccessDemo.getWithoutSharingNestedRecords';
-import getRecordsDefaultInherited from '@salesforce/apex/DefaultAccessDemo.getInheritedSharingNestedRecords';
-import getRecordsParentDefaultChildDefault from '@salesforce/apex/DefaultAccessDemo.getRecordsParentDefaultChildDefault';
-import getRecordsParentDefaultChildWithSharing from '@salesforce/apex/DefaultAccessDemo.getRecordsParentDefaultChildWithSharing';
-import getRecordsParentDefaultChildWithoutSharing from '@salesforce/apex/DefaultAccessDemo.getRecordsParentDefaultChildWithoutSharing';
-import getRecordsParentDefaultChildInherited from '@salesforce/apex/DefaultAccessDemo.getRecordsParentDefaultChildInherited';
+// Omitted Access Demo methods
+import getRecordsOmitted from '@salesforce/apex/OmittedAccessDemo.getRecords';
+import getRecordsOmittedNested from '@salesforce/apex/OmittedAccessDemo.getOmittedNestedRecords';
+import getRecordsOmittedWithSharing from '@salesforce/apex/OmittedAccessDemo.getWithSharingNestedRecords';
+import getRecordsOmittedWithoutSharing from '@salesforce/apex/OmittedAccessDemo.getWithoutSharingNestedRecords';
+import getRecordsOmittedInherited from '@salesforce/apex/OmittedAccessDemo.getInheritedSharingNestedRecords';
+import getRecordsParentOmittedChildOmitted from '@salesforce/apex/OmittedAccessDemo.getRecordsParentOmittedChildOmitted';
+import getRecordsParentOmittedChildWithSharing from '@salesforce/apex/OmittedAccessDemo.getRecordsParentOmittedChildWithSharing';
+import getRecordsParentOmittedChildWithoutSharing from '@salesforce/apex/OmittedAccessDemo.getRecordsParentOmittedChildWithoutSharing';
+import getRecordsParentOmittedChildInherited from '@salesforce/apex/OmittedAccessDemo.getRecordsParentOmittedChildInherited';
 
 // With Sharing Demo methods
 import getRecordsWithSharing from '@salesforce/apex/WithSharingDemo.getRecords';
-import getRecordsWithSharingNested from '@salesforce/apex/WithSharingDemo.getDefaultNestedRecords';
+import getRecordsWithSharingNested from '@salesforce/apex/WithSharingDemo.getOmittedNestedRecords';
 import getRecordsWithSharingWithSharing from '@salesforce/apex/WithSharingDemo.getWithSharingNestedRecords';
 import getRecordsWithSharingWithoutSharing from '@salesforce/apex/WithSharingDemo.getWithoutSharingNestedRecords';
 import getRecordsWithSharingInherited from '@salesforce/apex/WithSharingDemo.getInheritedSharingNestedRecords';
-import getRecordsParentWithSharingChildDefault from '@salesforce/apex/WithSharingDemo.getRecordsParentWithSharingChildDefault';
+import getRecordsParentWithSharingChildOmitted from '@salesforce/apex/WithSharingDemo.getRecordsParentWithSharingChildOmitted';
 import getRecordsParentWithSharingChildWithSharing from '@salesforce/apex/WithSharingDemo.getRecordsParentWithSharingChildWithSharing';
 import getRecordsParentWithSharingtChildWithoutSharing from '@salesforce/apex/WithSharingDemo.getRecordsParentWithSharingtChildWithoutSharing';
 import getRecordsParentWithSharingChildInherited from '@salesforce/apex/WithSharingDemo.getRecordsParentWithSharingChildInherited';
 
 // Without Sharing Demo methods
 import getRecordsWithoutSharing from '@salesforce/apex/WithoutSharingDemo.getRecords';
-import getRecordsWithoutSharingNested from '@salesforce/apex/WithoutSharingDemo.getDefaultNestedRecords';
+import getRecordsWithoutSharingNested from '@salesforce/apex/WithoutSharingDemo.getOmittedNestedRecords';
 import getRecordsWithoutSharingWithSharing from '@salesforce/apex/WithoutSharingDemo.getWithSharingNestedRecords';
 import getRecordsWithoutSharingWithoutSharing from '@salesforce/apex/WithoutSharingDemo.getWithoutSharingNestedRecords';
 import getRecordsWithoutSharingInherited from '@salesforce/apex/WithoutSharingDemo.getInheritedSharingNestedRecords';
-import getRecordsParentWithoutSharingChildDefault from '@salesforce/apex/WithoutSharingDemo.getRecordsParentWithoutSharingChildDefault';
+import getRecordsParentWithoutSharingChildOmitted from '@salesforce/apex/WithoutSharingDemo.getRecordsParentWithoutSharingChildOmitted';
 import getRecordsParentWithoutSharingChildWithSharing from '@salesforce/apex/WithoutSharingDemo.getRecordsParentWithoutSharingChildWithSharing';
 import getRecordsParentWithoutSharingChildWithoutSharing from '@salesforce/apex/WithoutSharingDemo.getRecordsParentWithoutSharingChildWithoutSharing';
 import getRecordsParentWithoutSharingChildInherited from '@salesforce/apex/WithoutSharingDemo.getRecordsParentWithoutSharingChildInherited';
 
 // Inherited Sharing Demo methods
 import getRecordsInherited from '@salesforce/apex/InheritedSharingDemo.getRecords';
-import getRecordsInheritedNested from '@salesforce/apex/InheritedSharingDemo.getDefaultNestedRecords';
+import getRecordsInheritedNested from '@salesforce/apex/InheritedSharingDemo.getOmittedNestedRecords';
 import getRecordsInheritedWithSharing from '@salesforce/apex/InheritedSharingDemo.getWithSharingNestedRecords';
 import getRecordsInheritedWithoutSharing from '@salesforce/apex/InheritedSharingDemo.getWithoutSharingNestedRecords';
 import getRecordsInheritedInherited from '@salesforce/apex/InheritedSharingDemo.getInheritedSharingNestedRecords';
-import getRecordsParentInheritedChildDefault from '@salesforce/apex/InheritedSharingDemo.getRecordsParentInheritedChildDefault';
+import getRecordsParentInheritedChildOmitted from '@salesforce/apex/InheritedSharingDemo.getRecordsParentInheritedChildOmitted';
 import getRecordsParentInheritedChildWithSharing from '@salesforce/apex/InheritedSharingDemo.getRecordsParentInheritedChildWithSharing';
 import getRecordsParentInheritedChildWithoutSharing from '@salesforce/apex/InheritedSharingDemo.getRecordsParentInheritedChildWithoutSharing';
 import getRecordsParentInheritedChildInherited from '@salesforce/apex/InheritedSharingDemo.getRecordsParentInheritedChildInherited';
@@ -66,7 +66,8 @@ export default class SharingTest extends LightningElement {
         { label: 'Base Class', fieldName: 'baseClass', type: 'text' },
         { label: 'Child Class', fieldName: 'childClass', type: 'text' },
         { label: 'Nested Class', fieldName: 'nestedClass', type: 'text' },
-        { label: 'Records', fieldName: 'records', type: 'text' }
+        { label: 'Viewable Records', fieldName: 'records', type: 'text' },
+        { label: 'Access Type Field', fieldName: 'type', type: 'text' }
     ];
 
     get isButtonDisabled() {
@@ -102,40 +103,40 @@ export default class SharingTest extends LightningElement {
             let records;
             const methodKey = `${this.selectedBaseClass}_${this.selectedChildClass || this.selectedNestedClass || ''}`;
             switch(methodKey) {
-                // Default Access Demo combinations
-                case 'Default_':
-                    records = await getRecordsDefault();
+                // Omitted Access Demo combinations
+                case 'Omitted_':
+                    records = await getRecordsOmitted();
                     break;
-                case 'Default_Default':
-                    records = await getRecordsDefaultNested();
+                case 'Omitted_Omitted':
+                    records = await getRecordsOmittedNested();
                     break;
-                case 'Default_WithSharing':
-                    records = await getRecordsDefaultWithSharing();
+                case 'Omitted_WithSharing':
+                    records = await getRecordsOmittedWithSharing();
                     break;
-                case 'Default_WithoutSharing':
-                    records = await getRecordsDefaultWithoutSharing();
+                case 'Omitted_WithoutSharing':
+                    records = await getRecordsOmittedWithoutSharing();
                     break;
-                case 'Default_InheritedSharing':
-                    records = await getRecordsDefaultInherited();
+                case 'Omitted_InheritedSharing':
+                    records = await getRecordsOmittedInherited();
                     break;
-                case 'Default_DefaultChild':
-                    records = await getRecordsParentDefaultChildDefault();
+                case 'Omitted_OmittedChild':
+                    records = await getRecordsParentOmittedChildOmitted();
                     break;
-                case 'Default_WithSharingChild':
-                    records = await getRecordsParentDefaultChildWithSharing();
+                case 'Omitted_WithSharingChild':
+                    records = await getRecordsParentOmittedChildWithSharing();
                     break;
-                case 'Default_WithoutSharingChild':
-                    records = await getRecordsParentDefaultChildWithoutSharing();
+                case 'Omitted_WithoutSharingChild':
+                    records = await getRecordsParentOmittedChildWithoutSharing();
                     break;
-                case 'Default_InheritedSharingChild':
-                    records = await getRecordsParentDefaultChildInherited();
+                case 'Omitted_InheritedSharingChild':
+                    records = await getRecordsParentOmittedChildInherited();
                     break;
 
                 // With Sharing Demo combinations
                 case 'WithSharing_':
                     records = await getRecordsWithSharing();
                     break;
-                case 'WithSharing_Default':
+                case 'WithSharing_Omitted':
                     records = await getRecordsWithSharingNested();
                     break;
                 case 'WithSharing_WithSharing':
@@ -147,8 +148,8 @@ export default class SharingTest extends LightningElement {
                 case 'WithSharing_InheritedSharing':
                     records = await getRecordsWithSharingInherited();
                     break;
-                case 'WithSharing_DefaultChild':
-                    records = await getRecordsParentWithSharingChildDefault();
+                case 'WithSharing_OmittedChild':
+                    records = await getRecordsParentWithSharingChildOmitted();
                     break;
                 case 'WithSharing_WithSharingChild':
                     records = await getRecordsParentWithSharingChildWithSharing();
@@ -164,7 +165,7 @@ export default class SharingTest extends LightningElement {
                 case 'WithoutSharing_':
                     records = await getRecordsWithoutSharing();
                     break;
-                case 'WithoutSharing_Default':
+                case 'WithoutSharing_Omitted':
                     records = await getRecordsWithoutSharingNested();
                     break;
                 case 'WithoutSharing_WithSharing':
@@ -176,8 +177,8 @@ export default class SharingTest extends LightningElement {
                 case 'WithoutSharing_InheritedSharing':
                     records = await getRecordsWithoutSharingInherited();
                     break;
-                case 'WithoutSharing_DefaultChild':
-                    records = await getRecordsParentWithoutSharingChildDefault();
+                case 'WithoutSharing_OmittedChild':
+                    records = await getRecordsParentWithoutSharingChildOmitted();
                     break;
                 case 'WithoutSharing_WithSharingChild':
                     records = await getRecordsParentWithoutSharingChildWithSharing();
@@ -193,7 +194,7 @@ export default class SharingTest extends LightningElement {
                 case 'InheritedSharing_':
                     records = await getRecordsInherited();
                     break;
-                case 'InheritedSharing_Default':
+                case 'InheritedSharing_Omitted':
                     records = await getRecordsInheritedNested();
                     break;
                 case 'InheritedSharing_WithSharing':
@@ -205,8 +206,8 @@ export default class SharingTest extends LightningElement {
                 case 'InheritedSharing_InheritedSharing':
                     records = await getRecordsInheritedInherited();
                     break;
-                case 'InheritedSharing_DefaultChild':
-                    records = await getRecordsParentInheritedChildDefault();
+                case 'InheritedSharing_OmittedChild':
+                    records = await getRecordsParentInheritedChildOmitted();
                     break;
                 case 'InheritedSharing_WithSharingChild':
                     records = await getRecordsParentInheritedChildWithSharing();
@@ -236,12 +237,14 @@ export default class SharingTest extends LightningElement {
             );
             if (!existingCombination) {
                 const records = this.results.length === 5 ? 'all' : 'shared records';
+                const type = this.results.some(record => record.Type !== null) ? 'Yes' : 'No';
                 this.testresults.push({
                     id: `${this.selectedBaseClass}_${this.selectedChildClass}_${this.selectedNestedClass}`,
                     baseClass: this.selectedBaseClass,
                     childClass: this.selectedChildClass,
                     nestedClass: this.selectedNestedClass,
-                    records
+                    records,
+                    type
                 });
             }
             this.testresults = [...this.testresults];

@@ -7,8 +7,8 @@ public without sharing class WithoutSharingDemo {
 
     // Static methods to instantiate and call inner classes
     @AuraEnabled
-    public static List<Opportunity> getDefaultNestedRecords() {
-        return new DefaultNested().getRecords();
+    public static List<Opportunity> getOmittedNestedRecords() {
+        return new OmittedNested().getRecords();
     }
     
     @AuraEnabled
@@ -28,8 +28,8 @@ public without sharing class WithoutSharingDemo {
 
     // Static methods to instantiate and call other classes
     @AuraEnabled
-    public static List<Opportunity> getRecordsParentWithoutSharingChildDefault() {
-        return DefaultAccessFlowDemo.getRecords();
+    public static List<Opportunity> getRecordsParentWithoutSharingChildOmitted() {
+        return OmittedAccessFlowDemo.getRecords();
     }
     
     @AuraEnabled
@@ -47,7 +47,7 @@ public without sharing class WithoutSharingDemo {
         return InheritedAccessFlowDemo.getRecords();
     }
     
-    public class DefaultNested {
+    public class OmittedNested {
         @AuraEnabled
         public List<Opportunity> getRecords() {
             return [SELECT Id, Name, StageName, Type FROM Opportunity LIMIT 5];
