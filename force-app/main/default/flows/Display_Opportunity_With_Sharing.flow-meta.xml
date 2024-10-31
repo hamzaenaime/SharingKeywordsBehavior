@@ -3,13 +3,18 @@
     <actionCalls>
         <name>Default_Access_Demo</name>
         <label>Default Access Demo</label>
-        <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
         <actionName>DefaultAccessFlowDemo</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Inherited_Sharing_Access_Demo</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>display_an_opportunity</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>faultmessage</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <nameSegment>DefaultAccessFlowDemo</nameSegment>
         <offset>0</offset>
@@ -19,13 +24,18 @@
     <actionCalls>
         <name>Inherited_Sharing_Access_Demo</name>
         <label>Inherited Sharing Access Demo</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
         <actionName>InheritedAccessFlowDemo</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>With_Sharing_Access_Demo</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>display_an_opportunity</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>faultmessage</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <nameSegment>InheritedAccessFlowDemo</nameSegment>
         <offset>0</offset>
@@ -35,13 +45,18 @@
     <actionCalls>
         <name>With_Sharing_Access_Demo</name>
         <label>With Sharing Access Demo</label>
-        <locationX>176</locationX>
+        <locationX>1634</locationX>
         <locationY>458</locationY>
         <actionName>WithSharingAccessFlowDemo</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Without_Sharing_Access_Demo</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>display_an_opportunity</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>faultmessage</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <nameSegment>WithSharingAccessFlowDemo</nameSegment>
         <offset>0</offset>
@@ -51,13 +66,18 @@
     <actionCalls>
         <name>Without_Sharing_Access_Demo</name>
         <label>Without Sharing Access Demo</label>
-        <locationX>176</locationX>
-        <locationY>566</locationY>
+        <locationX>2162</locationX>
+        <locationY>458</locationY>
         <actionName>WithoutSharingAccessFlowDemo</actionName>
         <actionType>apex</actionType>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>display_an_opportunity</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>faultmessage</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <nameSegment>WithoutSharingAccessFlowDemo</nameSegment>
         <offset>0</offset>
@@ -65,6 +85,22 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>ComponentChoiceAssi</name>
+        <label>Component Choice Assignemt</label>
+        <locationX>1370</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>ComponentChoice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Invocable_method_Sharing_Keyword</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Component</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Default</name>
         <choiceText>Default</choiceText>
@@ -105,6 +141,88 @@
             <stringValue>Without Sharing</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>Component</name>
+        <label>Component</label>
+        <locationX>1370</locationX>
+        <locationY>350</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>GetElement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ComponentChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Records_Element</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_opportunity</targetReference>
+            </connector>
+            <label>Get Element</label>
+        </rules>
+        <rules>
+            <name>OmittedSharing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ComponentChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Default</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Default_Access_Demo</targetReference>
+            </connector>
+            <label>Default</label>
+        </rules>
+        <rules>
+            <name>Inheritted_sharing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ComponentChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Inherited</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Inherited_Sharing_Access_Demo</targetReference>
+            </connector>
+            <label>Inheritted sharing</label>
+        </rules>
+        <rules>
+            <name>WithSharing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ComponentChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>With_Sharing</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>With_Sharing_Access_Demo</targetReference>
+            </connector>
+            <label>WithSharing</label>
+        </rules>
+        <rules>
+            <name>WithoutSharing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ComponentChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Without_Sharing</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Without_Sharing_Access_Demo</targetReference>
+            </connector>
+            <label>WithoutSharing</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Display Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Display Opportunities -&gt; User Or System Context - Depends on How Flow is Launched</label>
@@ -130,12 +248,16 @@
     <recordLookups>
         <name>get_opportunity</name>
         <label>get opportunities</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Default_Access_Demo</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>display_an_opportunity</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>faultmessage</targetReference>
+        </faultConnector>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Opportunity</object>
         <sortField>CreatedDate</sortField>
@@ -146,11 +268,14 @@
     <screens>
         <name>display_an_opportunity</name>
         <label>display an opportunity</label>
-        <locationX>176</locationX>
-        <locationY>674</locationY>
+        <locationX>1370</locationX>
+        <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>ComponentChoiceAssi</targetReference>
+        </connector>
         <fields>
             <name>Invocable_method_Sharing_Keyword</name>
             <choiceReferences>With_Sharing</choiceReferences>
@@ -159,6 +284,9 @@
             <choiceReferences>Default</choiceReferences>
             <choiceReferences>Get_Records_Element</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>ComponentChoice</elementReference>
+            </defaultValue>
             <fieldText>Invocable method Sharing Keyword</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -169,7 +297,7 @@
             <fieldType>Repeater</fieldType>
             <fields>
                 <name>opportunity</name>
-                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].StageName}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].StageName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Type: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Default_Access_Demo[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
                 <fieldType>DisplayText</fieldType>
             </fields>
             <inputParameters>
@@ -194,7 +322,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Invocable_method_Sharing_Keyword</leftValueReference>
+                    <leftValueReference>ComponentChoice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Default</elementReference>
@@ -207,7 +335,7 @@
             <fieldType>Repeater</fieldType>
             <fields>
                 <name>With_Sharing_text</name>
-                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!With_Sharing_Access_Demo[$EachItem].Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!With_Sharing_Access_Demo[$EachItem].StageName}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!With_Sharing_Access_Demo[$EachItem].Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!With_Sharing_Access_Demo[$EachItem].StageName}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Type: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!With_Sharing_Access_Demo[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
                 <fieldType>DisplayText</fieldType>
             </fields>
             <inputParameters>
@@ -232,7 +360,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Invocable_method_Sharing_Keyword</leftValueReference>
+                    <leftValueReference>ComponentChoice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>With_Sharing</elementReference>
@@ -245,7 +373,7 @@
             <fieldType>Repeater</fieldType>
             <fields>
                 <name>Without_sharing_text</name>
-                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!Without_Sharing_Access_Demo[$EachItem].Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;{!Without_Sharing_Access_Demo[$EachItem].StageName}&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
+                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!Without_Sharing_Access_Demo[$EachItem].Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;{!Without_Sharing_Access_Demo[$EachItem].StageName}&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Type: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Without_Sharing_Access_Demo[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
                 <fieldType>DisplayText</fieldType>
             </fields>
             <inputParameters>
@@ -270,7 +398,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Invocable_method_Sharing_Keyword</leftValueReference>
+                    <leftValueReference>ComponentChoice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Without_Sharing</elementReference>
@@ -283,7 +411,7 @@
             <fieldType>Repeater</fieldType>
             <fields>
                 <name>inherited_sharing_text</name>
-                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Inherited_Sharing_Access_Demo[$EachItem].Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Inherited_Sharing_Access_Demo[$EachItem].StageName}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
+                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Inherited_Sharing_Access_Demo[$EachItem].Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Inherited_Sharing_Access_Demo[$EachItem].StageName}﻿&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Type: &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!Inherited_Sharing_Access_Demo[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
                 <fieldType>DisplayText</fieldType>
             </fields>
             <inputParameters>
@@ -308,7 +436,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Invocable_method_Sharing_Keyword</leftValueReference>
+                    <leftValueReference>ComponentChoice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Inherited</elementReference>
@@ -321,7 +449,7 @@
             <fieldType>Repeater</fieldType>
             <fields>
                 <name>get_recrods_text</name>
-                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!get_opportunity[$EachItem].Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;{!get_opportunity[$EachItem].StageName}&lt;/p&gt;</fieldText>
+                <fieldText>&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!get_opportunity[$EachItem].Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Stage: &lt;/strong&gt;{!get_opportunity[$EachItem].StageName}&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Type: &lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!get_opportunity[$EachItem].Type}&lt;/span&gt;&lt;/p&gt;</fieldText>
                 <fieldType>DisplayText</fieldType>
             </fields>
             <inputParameters>
@@ -346,7 +474,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Invocable_method_Sharing_Keyword</leftValueReference>
+                    <leftValueReference>ComponentChoice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Get_Records_Element</elementReference>
@@ -357,14 +485,37 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>faultmessage</name>
+        <label>faultmessage</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error_message</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>1244</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>get_opportunity</targetReference>
+            <targetReference>display_an_opportunity</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>ComponentChoice</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>currentItemFromSourceCollection</name>
         <dataType>SObject</dataType>

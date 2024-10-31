@@ -66,8 +66,7 @@ export default class SharingTest extends LightningElement {
         { label: 'Base Class', fieldName: 'baseClass', type: 'text' },
         { label: 'Child Class', fieldName: 'childClass', type: 'text' },
         { label: 'Nested Class', fieldName: 'nestedClass', type: 'text' },
-        { label: 'Records', fieldName: 'records', type: 'text' },
-        { label: 'Access Type Value', fieldName: 'type', type: 'text' }
+        { label: 'Records', fieldName: 'records', type: 'text' }
     ];
 
     get isButtonDisabled() {
@@ -237,14 +236,12 @@ export default class SharingTest extends LightningElement {
             );
             if (!existingCombination) {
                 const records = this.results.length === 5 ? 'all' : 'shared records';
-                const type = this.results.some(record => record.Type) ? 'Yes' : 'No';
                 this.testresults.push({
                     id: `${this.selectedBaseClass}_${this.selectedChildClass}_${this.selectedNestedClass}`,
                     baseClass: this.selectedBaseClass,
                     childClass: this.selectedChildClass,
                     nestedClass: this.selectedNestedClass,
-                    records,
-                    type
+                    records
                 });
             }
             this.testresults = [...this.testresults];
